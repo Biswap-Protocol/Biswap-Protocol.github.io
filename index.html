@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biswap — Ultra-Low Fee DEX for Cross-Chain Trading on BSC</title>
+    <meta name="description" content="Biswap DEX offers 0.1% swap fees, cross-chain trading across 30+ blockchains, V3 AMM liquidity pools, and BSW governance token. Built on Binance Smart Chain.">
+    <link rel="canonical" href="https://biswap-protocol.github.io">
+    <meta property="og:title" content="Biswap — Ultra-Low Fee DEX for Cross-Chain Trading">
+    <meta property="og:description" content="Swap, bridge, and provide liquidity across 30+ chains with 0.1% fees. Powered by BSW on Binance Smart Chain.">
+    <meta property="og:url" content="https://biswap-protocol.github.io">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Biswap — Ultra-Low Fee DEX on BSC">
+    <meta name="twitter:description" content="0.1% swap fees, 30+ chains, V3 AMM. The freedom of exchange.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #0D111C;
+            --color-bg-card: #131A2E;
+            --color-bg-elevated: #1A2240;
+            --color-bg-input: #1E2A45;
+            --color-text: #E8ECF2;
+            --color-text-secondary: #7B8BA5;
+            --color-accent: #3B82F6;
+            --color-accent-hover: #2563EB;
+            --color-accent-soft: rgba(59,130,246,0.1);
+            --color-accent-glow: rgba(59,130,246,0.15);
+            --color-pink: #E4458F;
+            --color-pink-soft: rgba(228,69,143,0.1);
+            --color-border: rgba(255,255,255,0.06);
+            --color-border-hover: rgba(59,130,246,0.3);
+            --color-success: #34D399;
+            --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-xl: 24px;
+            --radius-full: 50px;
+            --shadow-card: 0 4px 24px rgba(0,0,0,0.3);
+            --shadow-glow: 0 0 60px rgba(59,130,246,0.06);
+            --max-width: 1140px;
+            --spacing-section: 100px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-primary); color: var(--color-text); background: var(--color-bg); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(13,17,28,0.9); backdrop-filter: blur(16px); border-bottom: 1px solid var(--color-border); }
+        .nav-inner { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 68px; }
+        .nav-logo { font-size: 1.3rem; font-weight: 800; color: var(--color-text); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+        .nav-logo-dot { width: 28px; height: 28px; background: var(--color-accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .nav-logo-dot::after { content: ''; width: 8px; height: 8px; background: #fff; border-radius: 50%; }
+        .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+        .nav-links a { color: var(--color-text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--color-text); }
+        .nav-cta { background: var(--color-accent); color: #fff; padding: 10px 24px; border-radius: var(--radius-full); font-weight: 700; font-size: 0.88rem; text-decoration: none; transition: all 0.2s; }
+        .nav-cta:hover { background: var(--color-accent-hover); }
+        .hamburger { display: none; background: none; border: none; cursor: pointer; }
+        .hamburger span { display: block; width: 22px; height: 2px; background: var(--color-text); margin: 5px 0; transition: 0.3s; }
+
+        .hero { padding: 150px 0 100px; text-align: center; position: relative; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; top: 50%; left: -100px; width: 400px; height: 400px; border: 1px solid rgba(59,130,246,0.08); border-radius: 50%; pointer-events: none; animation: pulse-ring 8s infinite; }
+        .hero::after { content: ''; position: absolute; top: 40%; right: -80px; width: 350px; height: 350px; border: 1px solid rgba(228,69,143,0.08); border-radius: 50%; pointer-events: none; animation: pulse-ring 10s infinite reverse; }
+        @keyframes pulse-ring { 0%,100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.15); opacity: 1; } }
+        .hero h1 { font-size: 3.2rem; font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 20px; }
+        .hero h1 span { background: linear-gradient(90deg, var(--color-accent), var(--color-pink)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .hero p { font-size: 1.15rem; color: var(--color-text-secondary); max-width: 520px; margin: 0 auto 36px; line-height: 1.7; }
+        .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .btn-primary { background: var(--color-accent); color: #fff; padding: 14px 36px; border-radius: var(--radius-full); font-weight: 700; font-size: 1rem; text-decoration: none; transition: all 0.2s; border: none; cursor: pointer; }
+        .btn-primary:hover { background: var(--color-accent-hover); transform: translateY(-2px); }
+        .btn-secondary { background: transparent; color: var(--color-text); padding: 14px 36px; border-radius: var(--radius-full); font-weight: 600; font-size: 1rem; text-decoration: none; border: 1.5px solid var(--color-border); transition: all 0.2s; }
+        .btn-secondary:hover { border-color: var(--color-accent); color: var(--color-accent); }
+
+        .hero-stats { display: flex; justify-content: center; gap: 48px; margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--color-border); }
+        .hero-stat-value { font-size: 1.8rem; font-weight: 800; }
+        .hero-stat-value.blue { color: var(--color-accent); }
+        .hero-stat-value.pink { color: var(--color-pink); }
+        .hero-stat-value.green { color: var(--color-success); }
+        .hero-stat-label { font-size: 0.82rem; color: var(--color-text-secondary); margin-top: 4px; }
+
+        section { padding: var(--spacing-section) 0; }
+        .section-label { display: inline-block; color: var(--color-accent); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; }
+        .section-title { font-size: 2.3rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 16px; }
+        .section-subtitle { font-size: 1.05rem; color: var(--color-text-secondary); max-width: 520px; line-height: 1.7; }
+        .section-header { text-align: center; margin-bottom: 56px; }
+        .section-header .section-subtitle { margin: 0 auto; }
+
+        .products { background: var(--color-bg-card); }
+        .products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .product-card { background: var(--color-bg-elevated); border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: 36px 28px; transition: all 0.3s; position: relative; }
+        .product-card:hover { border-color: var(--color-border-hover); transform: translateY(-4px); }
+        .product-icon { width: 50px; height: 50px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; font-size: 1.4rem; }
+        .product-icon.blue { background: var(--color-accent-soft); }
+        .product-icon.pink { background: var(--color-pink-soft); }
+        .product-card h3 { font-size: 1.12rem; font-weight: 700; margin-bottom: 10px; }
+        .product-card p { font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.7; }
+
+        .chains-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; }
+        .chain-badge { background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 18px 12px; text-align: center; transition: all 0.3s; }
+        .chain-badge:hover { border-color: var(--color-accent); }
+        .chain-icon { width: 36px; height: 36px; border-radius: 50%; background: var(--color-accent-soft); margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.7rem; color: var(--color-accent); }
+        .chain-name { font-size: 0.78rem; font-weight: 600; }
+
+        .how-it-works { background: var(--color-bg-card); }
+        .steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .step-card { background: var(--color-bg-elevated); border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: 32px 24px; text-align: center; position: relative; }
+        .step-num { width: 44px; height: 44px; border-radius: 50%; background: var(--color-accent); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1rem; margin: 0 auto 18px; }
+        .step-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+        .step-card p { font-size: 0.85rem; color: var(--color-text-secondary); line-height: 1.6; }
+
+        .features-list { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .feature-item { display: flex; align-items: flex-start; gap: 16px; background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 28px 24px; transition: all 0.3s; }
+        .feature-item:hover { border-color: var(--color-border-hover); }
+        .feature-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--color-accent); flex-shrink: 0; margin-top: 6px; }
+        .feature-item h3 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+        .feature-item p { font-size: 0.88rem; color: var(--color-text-secondary); line-height: 1.6; }
+
+        .tokenomics { background: var(--color-bg-card); }
+        .token-banner { background: linear-gradient(135deg, var(--color-bg-elevated) 0%, #1A2548 100%); border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: 56px 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+        .token-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .token-stat { background: rgba(255,255,255,0.03); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 20px; text-align: center; }
+        .token-stat-value { font-size: 1.5rem; font-weight: 800; color: var(--color-accent); }
+        .token-stat-label { font-size: 0.8rem; color: var(--color-text-secondary); margin-top: 4px; }
+
+        .faq-list { max-width: 720px; margin: 0 auto; }
+        .faq-item { border-bottom: 1px solid var(--color-border); }
+        .faq-question { width: 100%; background: none; border: none; padding: 22px 0; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-family: var(--font-primary); font-size: 1rem; font-weight: 600; color: var(--color-text); text-align: left; }
+        .faq-question::after { content: '+'; font-size: 1.4rem; color: var(--color-accent); transition: 0.2s; }
+        .faq-item.active .faq-question::after { content: '−'; }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        .faq-answer p { padding: 0 0 22px; color: var(--color-text-secondary); font-size: 0.92rem; line-height: 1.7; }
+        .faq-item.active .faq-answer { max-height: 300px; }
+
+        .cta-section { text-align: center; padding: 80px 0; background: radial-gradient(ellipse at center, rgba(59,130,246,0.04) 0%, transparent 70%); }
+        .cta-section h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 16px; }
+        .cta-section p { font-size: 1.05rem; color: var(--color-text-secondary); margin-bottom: 32px; }
+
+        footer { background: #080B14; border-top: 1px solid var(--color-border); padding: 56px 0 28px; color: var(--color-text-secondary); }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+        .footer-brand p { font-size: 0.85rem; line-height: 1.7; margin-top: 10px; max-width: 260px; }
+        .footer-col h4 { color: var(--color-text); font-size: 0.82rem; font-weight: 700; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.06em; }
+        .footer-col a { display: block; color: var(--color-text-secondary); text-decoration: none; font-size: 0.85rem; margin-bottom: 9px; transition: color 0.2s; }
+        .footer-col a:hover { color: var(--color-accent); }
+        .footer-bottom { border-top: 1px solid var(--color-border); padding-top: 20px; display: flex; justify-content: space-between; font-size: 0.78rem; }
+
+        @media (max-width: 900px) {
+            .hero h1 { font-size: 2.2rem; }
+            .section-title { font-size: 1.8rem; }
+            .products-grid, .steps-grid { grid-template-columns: 1fr; }
+            .features-list { grid-template-columns: 1fr; }
+            .chains-grid { grid-template-columns: repeat(3, 1fr); }
+            .token-banner { grid-template-columns: 1fr; padding: 36px 24px; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .hero-stats { gap: 28px; flex-wrap: wrap; }
+        }
+        @media (max-width: 640px) {
+            :root { --spacing-section: 60px; }
+            .nav-links { display: none; position: fixed; top: 68px; left: 0; right: 0; background: var(--color-bg); flex-direction: column; padding: 20px 24px; gap: 14px; border-bottom: 1px solid var(--color-border); }
+            .nav-links.active { display: flex; }
+            .hamburger { display: block; }
+            .hero { padding: 115px 0 60px; }
+            .hero h1 { font-size: 1.9rem; }
+            .hero-buttons { flex-direction: column; align-items: center; }
+            .chains-grid { grid-template-columns: repeat(2, 1fr); }
+            .steps-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebSite","name":"Biswap","url":"https://biswap-protocol.github.io","description":"Decentralized exchange on BSC with 0.1% fees, cross-chain swaps across 30+ chains, V3 AMM, and BSW governance token."}
+    </script>
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is Biswap?","acceptedAnswer":{"@type":"Answer","text":"Biswap is a DEX on BSC with 0.1% swap fees, cross-chain trading across 30+ chains via Wormhole and Squid Router, and V3 AMM liquidity pools."}},{"@type":"Question","name":"What are the fees on Biswap?","acceptedAnswer":{"@type":"Answer","text":"Biswap charges 0.1% per swap, among the lowest on BSC. Up to 90% of fees are returned through fee mining."}},{"@type":"Question","name":"Is Biswap safe?","acceptedAnswer":{"@type":"Answer","text":"Biswap is non-custodial with audited smart contracts on BSC. Users retain control of their funds at all times."}}]}
+    </script>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a href="https://biswap-protocol.github.io" class="nav-logo">
+            <div class="nav-logo-dot"></div>
+            biswap
+        </a>
+        <ul class="nav-links">
+            <li><a href="#products">Products</a></li>
+            <li><a href="#chains">Chains</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#tokenomics">BSW Token</a></li>
+            <li><a href="#faq">FAQ</a></li>
+        </ul>
+        <a href="CTA_LINK" class="nav-cta">Launch App</a>
+        <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="container">
+        <h1><span>Freedom</span> of Exchange</h1>
+        <p>Swap, bridge, and provide liquidity across 30+ blockchains with just 0.1% trading fees. Powered by BSW governance on Binance Smart Chain.</p>
+        <div class="hero-buttons">
+            <a href="CTA_LINK" class="btn-primary">Start Swapping</a>
+            <a href="#products" class="btn-secondary">Explore Features</a>
+        </div>
+        <div class="hero-stats">
+            <div>
+                <div class="hero-stat-value blue">0.1%</div>
+                <div class="hero-stat-label">Swap Fee</div>
+            </div>
+            <div>
+                <div class="hero-stat-value pink">30+</div>
+                <div class="hero-stat-label">Supported Chains</div>
+            </div>
+            <div>
+                <div class="hero-stat-value green">90%</div>
+                <div class="hero-stat-label">Fee Mining Return</div>
+            </div>
+            <div>
+                <div class="hero-stat-value blue">V3</div>
+                <div class="hero-stat-label">AMM Protocol</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="products" id="products">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-label">Core Products</span>
+            <h2 class="section-title">Swap, Bridge, Earn — All in One Place</h2>
+            <p class="section-subtitle">From instant token swaps to cross-chain bridging and concentrated liquidity, Biswap covers every trading need.</p>
+        </div>
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-icon blue">&#8644;</div>
+                <h3>Token Swap</h3>
+                <p>Swap BEP-20 tokens instantly at 0.1% fee. Smart Router optimizes routes across V2 and V3 pools to find the best price for every trade.</p>
+            </div>
+            <div class="product-card">
+                <div class="product-icon pink">&#128279;</div>
+                <h3>Cross-Chain Bridge</h3>
+                <p>Bridge assets across 30+ blockchains via Wormhole and Squid Router integrations. Move tokens between Ethereum, BSC, Polygon, Arbitrum, Avalanche, and more.</p>
+            </div>
+            <div class="product-card">
+                <div class="product-icon blue">&#128200;</div>
+                <h3>V3 Liquidity Pools</h3>
+                <p>Provide concentrated liquidity at custom price ranges. Choose your fee tier — 0.015%, 0.08%, 0.28%, or 1% — and maximize capital efficiency.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="chains">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-label">Supported Chains</span>
+            <h2 class="section-title">Trade Across 30+ Blockchains</h2>
+            <p class="section-subtitle">Cross-chain swaps powered by Wormhole and Squid Router for seamless multi-network trading.</p>
+        </div>
+        <div class="chains-grid">
+            <div class="chain-badge"><div class="chain-icon">BNB</div><div class="chain-name">BNB Chain</div></div>
+            <div class="chain-badge"><div class="chain-icon">ETH</div><div class="chain-name">Ethereum</div></div>
+            <div class="chain-badge"><div class="chain-icon">ARB</div><div class="chain-name">Arbitrum</div></div>
+            <div class="chain-badge"><div class="chain-icon">POL</div><div class="chain-name">Polygon</div></div>
+            <div class="chain-badge"><div class="chain-icon">AVAX</div><div class="chain-name">Avalanche</div></div>
+            <div class="chain-badge"><div class="chain-icon">FTM</div><div class="chain-name">Fantom</div></div>
+            <div class="chain-badge"><div class="chain-icon">OP</div><div class="chain-name">Optimism</div></div>
+            <div class="chain-badge"><div class="chain-icon">BASE</div><div class="chain-name">Base</div></div>
+            <div class="chain-badge"><div class="chain-icon">SOL</div><div class="chain-name">Solana</div></div>
+            <div class="chain-badge"><div class="chain-icon">CELO</div><div class="chain-name">Celo</div></div>
+            <div class="chain-badge"><div class="chain-icon">NEAR</div><div class="chain-name">NEAR</div></div>
+            <div class="chain-badge"><div class="chain-icon">+19</div><div class="chain-name">And More</div></div>
+        </div>
+    </div>
+</section>
+
+<section class="how-it-works" id="how">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-label">How It Works</span>
+            <h2 class="section-title">Start Trading in 4 Steps</h2>
+        </div>
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-num">1</div>
+                <h3>Connect Wallet</h3>
+                <p>Link MetaMask, Trust Wallet, or any WalletConnect-compatible wallet to the Biswap interface.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-num">2</div>
+                <h3>Select Tokens</h3>
+                <p>Choose the token pair you want to swap and the source/destination chain for cross-chain trades.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-num">3</div>
+                <h3>Review & Confirm</h3>
+                <p>Smart Router finds the best rate. Review the quote, fees, and estimated output before confirming.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-num">4</div>
+                <h3>Receive Tokens</h3>
+                <p>Tokens arrive in your wallet — instantly for same-chain swaps, minutes for cross-chain bridges.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="features">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-label">Why Biswap</span>
+            <h2 class="section-title">Built for Traders Who Care About Fees</h2>
+        </div>
+        <div class="features-list">
+            <div class="feature-item">
+                <div class="feature-dot"></div>
+                <div>
+                    <h3>0.1% Trading Fee</h3>
+                    <p>The lowest swap fee on BSC. Trade more, keep more. No hidden charges or surprise markups on any pair.</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-dot" style="background:var(--color-pink)"></div>
+                <div>
+                    <h3>Fee Mining — Earn Back Up to 90%</h3>
+                    <p>Transaction fee mining returns up to 90% of your swap fees in BSW tokens. The more you trade, the more you earn back.</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-dot"></div>
+                <div>
+                    <h3>Smart Router V2/V3</h3>
+                    <p>Optimized routing across both V2 and V3 liquidity pools finds the best execution path for every trade automatically.</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-dot" style="background:var(--color-pink)"></div>
+                <div>
+                    <h3>3-Tier Referral System</h3>
+                    <p>Invite users and earn commissions from their swaps, farms, and pool activity — plus earnings from their referrals too.</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-dot"></div>
+                <div>
+                    <h3>Concentrated Liquidity (V3)</h3>
+                    <p>Choose custom price ranges and fee tiers for LP positions. Maximize capital efficiency versus traditional AMM pools.</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-dot" style="background:var(--color-pink)"></div>
+                <div>
+                    <h3>Limit Orders</h3>
+                    <p>Set target prices and let Biswap execute when the market reaches your level. No need to watch charts constantly.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="tokenomics" id="tokenomics">
+    <div class="container">
+        <div class="token-banner">
+            <div>
+                <span class="section-label">BSW Token</span>
+                <h2 class="section-title">The Heart of Biswap Ecosystem</h2>
+                <p class="section-subtitle">BSW powers governance, fee mining rewards, referral commissions, and access to premium features across the platform.</p>
+            </div>
+            <div class="token-stats">
+                <div class="token-stat">
+                    <div class="token-stat-value">700M</div>
+                    <div class="token-stat-label">Total Supply</div>
+                </div>
+                <div class="token-stat">
+                    <div class="token-stat-value">0.1%</div>
+                    <div class="token-stat-label">Swap Fee</div>
+                </div>
+                <div class="token-stat">
+                    <div class="token-stat-value">90%</div>
+                    <div class="token-stat-label">Fee Return</div>
+                </div>
+                <div class="token-stat">
+                    <div class="token-stat-value">3-Tier</div>
+                    <div class="token-stat-label">Referral System</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="faq">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-label">FAQ</span>
+            <h2 class="section-title">Frequently Asked Questions</h2>
+        </div>
+        <div class="faq-list">
+            <div class="faq-item">
+                <button class="faq-question">What is Biswap and how does it work?</button>
+                <div class="faq-answer"><p>Biswap is a decentralized exchange built on BSC that lets users swap tokens with a 0.1% fee. It supports cross-chain swaps through Wormhole and Squid Router across 30+ chains, and uses a V3 AMM for flexible liquidity provisioning and better capital efficiency.</p></div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">What are the swap fees on Biswap?</button>
+                <div class="faq-answer"><p>Biswap charges 0.1% per swap — among the lowest on BSC. Up to 90% of these fees are returned through fee mining, where traders receive BSW tokens proportional to their trading activity.</p></div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Which blockchains does Biswap support?</button>
+                <div class="faq-answer"><p>Biswap supports cross-chain swaps across 30+ blockchains including Ethereum, Polygon, Avalanche, Fantom, Arbitrum, Base, Optimism, Solana, and more through Wormhole and Squid Router integrations.</p></div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">What is the BSW token used for?</button>
+                <div class="faq-answer"><p>BSW is Biswap's governance and utility token with a 700M supply. It's used for voting, earning rewards from fee mining and liquidity pools, and participating in the 3-tier referral system.</p></div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Is Biswap safe to use?</button>
+                <div class="faq-answer"><p>Biswap is non-custodial — users retain control of their funds at all times. Smart contracts have been audited, and the platform operates on BSC's proven infrastructure.</p></div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">How does the referral program work?</button>
+                <div class="faq-answer"><p>Biswap has a 3-tier referral system where you earn commissions from people you refer, their referrals, and one level deeper. Rewards come from swaps, farms, and pools — distributed in real-time to your wallet.</p></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta-section">
+    <div class="container">
+        <h2>Start Trading with the Lowest Fees on BSC</h2>
+        <p>Join Biswap — swap, bridge, and earn across 30+ chains with just 0.1% fees.</p>
+        <a href="CTA_LINK" class="btn-primary">Launch App</a>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="https://biswap-protocol.github.io" class="nav-logo">
+                    <div class="nav-logo-dot"></div>
+                    biswap
+                </a>
+                <p>Decentralized exchange on BSC with 0.1% fees, cross-chain swaps across 30+ chains, V3 AMM, and BSW governance.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Products</h4>
+                <a href="#products">Swap</a>
+                <a href="#products">Bridge</a>
+                <a href="#products">Liquidity</a>
+                <a href="#features">Limit Orders</a>
+            </div>
+            <div class="footer-col">
+                <h4>Resources</h4>
+                <a href="#faq">FAQ</a>
+                <a href="#tokenomics">BSW Token</a>
+                <a href="https://docs.biswap.org" target="_blank" rel="noopener noreferrer">Documentation</a>
+            </div>
+            <div class="footer-col">
+                <h4>Community</h4>
+                <a href="SOCIAL_URL_TWITTER" target="_blank" rel="noopener noreferrer">Twitter</a>
+                <a href="SOCIAL_URL_DISCORD" target="_blank" rel="noopener noreferrer">Discord</a>
+                <a href="SOCIAL_URL_TELEGRAM" target="_blank" rel="noopener noreferrer">Telegram</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 Biswap. All rights reserved.</span>
+            <span>Freedom of Exchange</span>
+        </div>
+    </div>
+</footer>
+
+<script>
+document.querySelector('.hamburger').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active')});
+document.querySelectorAll('.faq-question').forEach(function(b){b.addEventListener('click',function(){var i=this.parentElement;document.querySelectorAll('.faq-item').forEach(function(o){if(o!==i)o.classList.remove('active')});i.classList.toggle('active')})});
+document.querySelectorAll('.nav-links a').forEach(function(l){l.addEventListener('click',function(){document.querySelector('.nav-links').classList.remove('active')})});
+</script>
+
+</body>
+</html>
